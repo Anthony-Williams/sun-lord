@@ -1,6 +1,6 @@
 class Hero:
     def __init__(self, max_health, health, max_melee, melee, ranged, stealth, defence, max_magic, magic,
-                 gold, hero_class, name, equipment):
+                 gold, hero_class, name, equipment, detecting_magic):
         self.max_health = max_health
         self.health = health
         self.max_melee = max_melee
@@ -14,6 +14,7 @@ class Hero:
         self.hero_class = hero_class
         self.name = name
         self.equipment = equipment
+        self.detecting_magic = detecting_magic
 
     # getters - for getting a variable
     def get_max_health(self):
@@ -55,6 +56,9 @@ class Hero:
     def get_equipment(self):
         return self.equipment
 
+    def get_detecting_magic(self):
+        return self.detecting_magic
+
     # setters - for changing a variable
     def set_health(self, new_health):
         if new_health > self.max_health:
@@ -91,3 +95,6 @@ class Hero:
 
     def set_negative_equipment(self, new_equipment):
         self.equipment.remove(new_equipment)
+
+    def set_detecting_magic(self, new_detecting_magic):
+        self.detecting_magic = new_detecting_magic

@@ -4,6 +4,7 @@ import os
 import sys
 from time import sleep
 
+from world import World
 from hero_class import Hero
 
 
@@ -17,8 +18,6 @@ def typing(message):
     # todo uncomment
     print(message)
     return ""
-
-
 #    print("")
 #    for word in message:
 #        sleep(random.choice([0.3, 0.11, 0.08, 0.07, 0.07, 0.07, 0.06, 0.06, 0.05, 0.01]))
@@ -35,13 +34,16 @@ def convert_to_int(string):
         return convert_to_int(input("Please input an integer\n"))
 
 
+def create_world():
+    return World(weather=None, time_unit=10, magic_time_marker=-1, tower_upper_floor_campfire="old", purple_moss=True)
+
 def create_character():
     hero_array, hero_class, hero_name = create_hero()
     character = Hero(max_health=hero_array[0], health=hero_array[1], max_melee=hero_array[2],
                      melee=hero_array[3], ranged=hero_array[4], stealth=hero_array[5],
                      defence=hero_array[6], max_magic=hero_array[7], magic=hero_array[8],
                      gold=hero_array[9], hero_class=hero_class, name=hero_name,
-                     equipment=['fishing rod'])
+                     equipment=[], detecting_magic=False)
     return character
 
 
@@ -145,13 +147,7 @@ def input_hero_points(hero_points, stat):
     else:
         hero_points -= input_stat
         typing(f"You have put {input_stat} into {stat} and have {hero_points} remaining")
-        return hero_points, input_stat
-
-
-def take_damage(character, damage):
-    character.set_health(character.get_health() - damage)
-    if character.get_health() <= 0:
-        you_died()
+    return hero_points, input_stat
 
 
 def you_died():
@@ -164,8 +160,14 @@ def check_option_validity(x, options):
     return x in options
 
 
-def wandering_encounter_outside():
+def wandering_encounter_outside_result():
     # todo
     x = randint(1, 6) + randint(1, 6) + randint(1, 6)
-    outside_encounters = ['troll', 'sheep', 'giant toad'] * 6
-    return outside_encounters[x]
+    outside_encounter = ['troll', 'sheep', 'giant toad'] * 6
+    return outside_encounter[x]
+
+
+def wandering_encounter_inside_result():
+    # todo
+    inside_encounter = ['spider', 'fly']
+    return random.choice(inside_encounter)

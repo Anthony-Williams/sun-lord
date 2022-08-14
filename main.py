@@ -11,7 +11,9 @@ def main():
     functions.clear_screen()
     # todo
     # village.shopping()
-    tower_entrance.introduction(character)
+    world = functions.create_world()
+    world.set_new_weather()
+    tower_entrance.introduction(character, world)
 
 
 if __name__ == "__main__":
