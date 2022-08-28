@@ -150,6 +150,22 @@ def input_hero_points(hero_points, stat):
     return hero_points, input_stat
 
 
+def equip(character):
+    equipment = character.get_equipment()
+    if 'dagger' in equipment:
+        character.set_max_melee(character.get_max_melee() + 1)
+        character.set_melee(character.get_melee() + 1)
+    if 'sword' in equipment:
+        character.set_max_melee(character.get_max_melee() + 2)
+        character.set_melee(character.get_melee() + 2)
+    if 'longbow' in equipment:
+        character.set_ranged(character.get_ranged() + 1)
+    if 'shield' in equipment:
+        character.set_defence(character.get_defence() + 2)
+    if 'cloak of stealth' in equipment:
+        character.set_stealth(character.get_stealth() + 3)
+
+
 def you_died():
     typing("You are dead")
     sleep(3)

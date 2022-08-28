@@ -12,34 +12,34 @@ def introduction(character, world):
 
 def upper_floor_options(character, world):
     if character.hero_class == "W":
-        x = convert_to_int(input('''
+        x = convert_to_int(input(typing('''
         Would you like to:
             1 - investigate the campfire
             2 - take the stairs down
             3 - sleep
             4 - detect magic
-        '''))
+        ''')))
         if not check_option_validity(x, [1, 2, 3, 4]):
             typing("That is not a valid option")
             upper_floor_options(character, world)
     elif character.hero_class == "C":
-        x = convert_to_int(input('''
+        x = convert_to_int(input(typing('''
         Would you like to:
             1 - investigate the campfire
             2 - take the stairs down
             3 - sleep
             5 - heal
-        '''))
+        ''')))
         if not check_option_validity(x, [1, 2, 3, 5]):
             typing("That is not a valid option")
             upper_floor_options(character, world)
     else:
-        x = convert_to_int(input('''
+        x = convert_to_int(input(typing('''
         Would you like to:
             1 - investigate the campfire
             2 - take the stairs down
             3 - sleep
-        '''))
+        ''')))
         if not check_option_validity(x, [1, 2, 3]):
             typing("That is not a valid option")
             upper_floor_options(character, world)
