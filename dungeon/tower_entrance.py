@@ -1,8 +1,8 @@
 from random import randint
 
-import actions
-import dungeon.tower_lower_floor
-import dungeon.tower_upper_floor
+from actions import noncombat
+from dungeon import tower_lower_floor
+from dungeon import tower_upper_floor
 from functions import typing, convert_to_int, check_option_validity, wandering_encounter_outside_result
 
 
@@ -20,30 +20,7 @@ def introduction(character, world):
 
 
 def tower_options(character, world):
-    if character.hero_class == "W" and 'fishing rod' in character.equipment:
-        x = convert_to_int(input('''Would you like to
-            1 - go inside
-            2 - look inside
-            3 - climb the tower
-            4 - circle the tower
-            5 - go fishing
-            6 - detect magic
-            '''))
-        if not check_option_validity(x, [1, 2, 3, 4, 5, 6]):
-            typing("That is not a valid option")
-            tower_options(character, world)
-    elif character.hero_class == "W":
-        x = convert_to_int(input('''Would you like to
-            1 - go inside
-            2 - look inside
-            3 - climb the tower
-            4 - circle the tower
-            6 - detect magic
-            '''))
-        if not check_option_validity(x, [1, 2, 3, 4, 6]):
-            typing("That is not a valid option")
-            tower_options(character, world)
-    elif 'fishing rod' in character.equipment:
+    if 'fishing rod' in character.equipment:
         x = convert_to_int(input('''Would you like to
             1 - go inside
             2 - look inside
@@ -74,8 +51,6 @@ def tower_options(character, world):
         circle_the_tower(character, world)
     if x == 5:
         go_fishing_by_the_tower(character, world)
-    if x == 6:
-        detect_magic_by_the_tower(character, world)
 
 
 def go_inside_the_tower(character, world):
@@ -96,8 +71,8 @@ def climb_the_tower(character, world):
     if character.hero_class == "T":
         x += 5
     if x < 8:
-        actions.take_damage(character, randint(1, 6))
         typing("You slip and fall, injuring yourself")
+        actions.take_damage(character, randint(1, 6))
         tower_options(character, world)
     else:
         typing("You climb up to the second floor of the tower")
@@ -105,7 +80,6 @@ def climb_the_tower(character, world):
 
 
 def circle_the_tower(character, world):
-    actions.time_count(character, world, 'outside')
     x = randint(1, 20)
     if character.hero_class == "T":
         x += 5
@@ -114,28 +88,25 @@ def circle_the_tower(character, world):
         typing("You find nothing")
         tower_options(character, world)
     elif 10 > x > 5:
-        typing(f"You find tracks from a {wandering_encounter_outside_result()}")
+        typing(f"You find tracks from a {wandering_encounter_outside_result().get_name()}")
     elif 15 > x > 10:
-        typing(f"You find tracks from a {wandering_encounter_outside_result()} and a {wandering_encounter_outside_result()}")
+        typing(f"You find tracks from a {wandering_encounter_outside_result().get_name()} and a {wandering_encounter_outside_result().get_name()}")
     elif 20 > x > 15:
-        typing(f"You find tracks from a {wandering_encounter_outside_result()} and a {wandering_encounter_outside_result()} and a {wandering_encounter_outside_result()}")
+        typing(f"You find tracks from a {wandering_encounter_outside_result().get_name()}, a {wandering_encounter_outside_result().get_name()} and a {wandering_encounter_outside_result().get_name()}")
     else:
-        typing(f"You find tracks from a {wandering_encounter_outside_result()} and a {wandering_encounter_outside_result()} and a {wandering_encounter_outside_result()} and a {wandering_encounter_outside_result()}")
+        typing(f"You find tracks from a {wandering_encounter_outside_result().get_name()}, a {wandering_encounter_outside_result().get_name()}, a {wandering_encounter_outside_result().get_name()} and a {wandering_encounter_outside_result().get_name()}")
+    x = randint(1, 6)
+    if x == 6:
+        noncombat.encounter(character, wandering_encounter_outside_result())
     tower_options(character, world)
 
 
 def go_fishing_by_the_tower(character, world):
-    actions.time_count(character, world, 'outside')
     fish = randint(1, 4)
     typing(f"You fish for ten minutes and catch {fish} fish")
     for x in range(1, fish):
         character.equipment.append('fish')
-    tower_options(character, world)
-
-
-def detect_magic_by_the_tower(character, world):
-    actions.time_count(character, world, 'outside')
-    world.set_magic_time_marker(world.get_time_unit())
-    character.set_detecting_magic(True)
-    typing("There is no magic here. You will continue detecting magic for a while")
+    x = randint(1, 6)
+    if x == 6:
+        noncombat.encounter(character, wandering_encounter_outside_result())
     tower_options(character, world)

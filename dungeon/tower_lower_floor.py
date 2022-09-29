@@ -1,6 +1,7 @@
-import dungeon.tower_entrance
-import dungeon.tower_upper_floor
-import dungeon.tower_basement
+from actions import noncombat
+from dungeon import tower_entrance
+from dungeon import tower_upper_floor
+from dungeon import tower_basement
 from functions import typing, convert_to_int, check_option_validity
 from plants import purple_moss
 
@@ -52,5 +53,6 @@ def set_fire_to_the_moss(character, world):
            The fire blasts you back a few feet, hurting you.\
            You gingerly get to your feet, pleased to note that the purple moss is gone.")
     world.set_purple_moss(False)
+    actions.take_damage(character, randint(1,4))
     lower_floor_options(character, world)
 

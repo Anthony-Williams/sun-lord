@@ -6,6 +6,7 @@ from time import sleep
 
 from world import World
 from hero_class import Hero
+from monster import Monster
 
 
 def clear_screen():
@@ -43,7 +44,7 @@ def create_character():
                      melee=hero_array[3], ranged=hero_array[4], stealth=hero_array[5],
                      defence=hero_array[6], max_magic=hero_array[7], magic=hero_array[8],
                      gold=hero_array[9], hero_class=hero_class, name=hero_name,
-                     equipment=[], detecting_magic=False)
+                     equipment=[])
     return character
 
 
@@ -178,11 +179,16 @@ def check_option_validity(x, options):
 
 def wandering_encounter_outside_result():
     # todo
-    x = randint(1, 6) + randint(1, 6) + randint(1, 6)
-    outside_encounter = ['troll', 'sheep', 'giant toad'] * 6
+    x = randint(1, 6) + randint(1, 6) + randint(1, 6) - 1
+    troll = Monster("troll", 16, 6, "slow", 4, 0, ["troll blood", "big club", "sheep skull"])
+    sheep = Monster("sheep", 4, 0, "normal", 2, 0, ["sheep meat"])
+    giant_toad = Monster("giant toad", 6, 3, "fast", 4, 0, ["gems in the stomach"])
+    outside_encounter = [
+                            troll,
+                            sheep,
+                            giant_toad
+                        ] * 6
     return outside_encounter[x]
-
-
 def wandering_encounter_inside_result():
     # todo
     inside_encounter = ['spider', 'fly']
