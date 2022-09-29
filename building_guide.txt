@@ -1,0 +1,20 @@
+Create a room
+1. create [room].py in /dungeon
+2. add imports
+	from functions import typing, convert_to_int, check_option_validity
+	import actions
+3. create an "introduction" function
+	def introduction(character, world):
+		typing("<here you describe the location">)
+		<room>_options(character, world)
+4. create an "options" function
+	def <room>_options(character, world):
+		x = convert_to_int(input(typing('''Would you like to:
+			1 - <option 1>
+			<etc.>
+			''')))
+		if not check_option_validity(x, [<valid options values, comma separated>]):
+			typing("That is not a valid option")
+			<room>_options(character, world)
+		if x == 1:
+			<option function name>(character, world)

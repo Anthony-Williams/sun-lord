@@ -2,7 +2,7 @@ import os
 from time import sleep
 
 import functions
-import tower_entrance
+from dungeon import tower_entrance
 import village
 from hero_class import Hero
 
